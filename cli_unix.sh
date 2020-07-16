@@ -44,11 +44,13 @@ fi
 echo -e "${OK_COLOR}==> Creating directories${NO_COLOR}"
 $SUDO mkdir -p /usr/local/secrethub/bin
 
-# Retrieve latest version
-echo -e "${OK_COLOR}==> Retrieving latest version${NO_COLOR}"
-VERSION=$(curl --silent "https://api.github.com/repos/secrethub/secrethub-cli/releases/latest" | grep tag_name | awk -F\" '{ print $4 }')
+if [ "${SECRETHUB_CLI_VERSION:-latest}" != "latest" ]; then
+    VERSION=v${SECRETHUB_CLI_VERSION}
+else
+    # Retrieve latest version
+    VERSION=$(curl --silent "https://api.github.com/repos/secrethub/secrethub-cli/releases/latest" | grep tag_name | awk -F\" '{ print $4 }')
+fi
 
-echo -e "${OK_COLOR}==> Downloading latest version${NO_COLOR}"
 ARCHIVE_NAME=secrethub-$VERSION-$OS-$ARCH
 LINK_TAR=https://github.com/secrethub/secrethub-cli/releases/download/$VERSION/$ARCHIVE_NAME.tar.gz
 
