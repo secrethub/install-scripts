@@ -1,15 +1,10 @@
 on: push
 jobs:
-  test-linux:
-    name: Test Linux
-    runs-on: ubuntu-latest
+  test-windows:
+    name: Test Windows
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@master
-      - name: ShellCheck
-        uses: ludeeus/action-shellcheck@master
-        env:
-          SHELLCHECK_OPTS: --exclude SC2034,SC2086,SC2059,SC2046
-      - name: Test
-        run: |
-          cd tests
-          ./cli_unix.sh
+      - name: Run tests
+        shell: pwsh
+        run: ./cli_windows.ps1
