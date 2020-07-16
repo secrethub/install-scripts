@@ -56,23 +56,3 @@ curl -fsSL $LINK_TAR | $SUDO tar -xz  -C /usr/local/secrethub;
 
 # symlink in the PATH
 $SUDO ln -sf /usr/local/secrethub/bin/secrethub /usr/local/bin/secrethub
-
-if [ -d /etc/bash_completion.d/ ]; then
-    echo -e "${OK_COLOR}==> Installing completion for Bash${NO_COLOR}"
-    $SUDO sh -c "secrethub --completion-script-bash > /etc/bash_completion.d/secrethub"
-elif [ -d /usr/local/etc/bash_completion.d/ ]; then
-    echo -e "${OK_COLOR}==> Installing completion for Bash${NO_COLOR}"
-    $SUDO sh -c "secrethub --completion-script-bash > /usr/local/etc/bash_completion.d/secrethub"
-fi
-
-if command -v zsh > /dev/null 2>&1; then
-    echo -e "${OK_COLOR}==> Installing completion for ZSH${NO_COLOR}"
-    mkdir -p ~/.zsh/completion
-    secrethub --completion-script-zsh > ~/.zsh/completion/secrethub
-
-    if ! grep -q "source ~/.zsh/completion/secrethub" ~/.zshrc; then
-        echo "source ~/.zsh/completion/secrethub" >> ~/.zshrc
-    fi
-fi
-
-echo -e "${OK_COLOR}Successfully installed the SecretHub CLI.${NO_COLOR}\nTo get started, run:\n\n\tsecrethub signup";
