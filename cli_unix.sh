@@ -43,7 +43,7 @@ if [ "${SECRETHUB_CLI_VERSION:-latest}" != "latest" ]; then
 else
     # Retrieve latest version
     printf "${OK_COLOR}==> Retrieving latest version${NO_COLOR}\n"
-    VERSION=$(curl --silent "https://api.github.com/repos/secrethub/secrethub-cli/releases/latest" | grep tag_name | awk -F\" '{ print $4 }')
+    VERSION=$(curl -sSf "https://api.github.com/repos/secrethub/secrethub-cli/releases/latest" | grep tag_name | awk -F\" '{ print $4 }')
 fi
 
 # Exit if version is already installed
