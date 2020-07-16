@@ -51,6 +51,11 @@ else
     VERSION=$(curl --silent "https://api.github.com/repos/secrethub/secrethub-cli/releases/latest" | grep tag_name | awk -F\" '{ print $4 }')
 fi
 
+# Exit if version is already installed
+if command -v secrethub >/dev/null 2>&1 && secrethub --version 2>&1 | cut -d "," -f 1 | grep -q "$(echo $VERSION | cut -c 2-)$"; then
+    exit 0
+fi
+
 ARCHIVE_NAME=secrethub-$VERSION-$OS-$ARCH
 LINK_TAR=https://github.com/secrethub/secrethub-cli/releases/download/$VERSION/$ARCHIVE_NAME.tar.gz
 
